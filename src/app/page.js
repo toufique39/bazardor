@@ -1,4 +1,6 @@
 import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import ProductSections from "@/components/ProductSections";
 
 export default function HomePage() {
   return (
@@ -6,10 +8,8 @@ export default function HomePage() {
       <Navbar />
 
       <main>
-        <h1 className="p-10 text-3xl font-bold">
-          বাজার দর
-        </h1>
-
+        <Hero />
+        <ProductSections />
       </main>
     </>
   );
