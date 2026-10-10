@@ -44,7 +44,7 @@ BazarDor is a responsive web application that helps users explore essential prod
 Clone the repository:
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/toufique39/bazardor
 cd bazardor
 ```
 
@@ -57,16 +57,16 @@ npm install
 Create a `.env.local` file in the project root and configure the required environment variables:
 
 ```env
-MONGODB_URI=your_mongodb_connection_string
+MONGODB_URI
 MONGODB_DB=bazardor
-BETTER_AUTH_SECRET=your_better_auth_secret
+BETTER_AUTH_SECRET
 BETTER_AUTH_URL=http://localhost:10000
 
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_CLIENT_ID
+GOOGLE_CLIENT_SECRET
 
-GITHUB_CLIENT_ID=your_github_client_id
-GITHUB_CLIENT_SECRET=your_github_client_secret
+GITHUB_CLIENT_ID
+GITHUB_CLIENT_SECRET
 ```
 
 Never commit `.env.local` or expose database credentials and secret keys.
