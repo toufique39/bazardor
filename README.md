@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# BazarDor — বাজার দর
+
+BazarDor is a responsive web application that helps users explore essential products and view their latest available prices across markets in Bangladesh.
+
+**Live Website:** https://bazardor39.netlify.app/
+
+## Technologies Used
+
+- Next.js (App Router)
+- React.js
+- JavaScript
+- Tailwind CSS
+- MongoDB Atlas
+- Better Auth
+- Google OAuth
+- GitHub OAuth
+- Netlify
+- External BazarDor API
+
+## Features
+
+1. **Responsive Design:** Optimized for mobile, tablet, and desktop screens.
+2. **Product Price Overview:** Browse essential products and their available price information.
+3. **Price Change Indicators:** Identify products with increasing or decreasing prices.
+4. **Category Browsing:** Explore products by category and sort them by price.
+5. **Product Details:** View product information and market-level prices.
+6. **Authentication:** Register and sign in using email and password.
+7. **Social Login:** Sign in using Google or GitHub.
+8. **Protected Pages:** Require authentication to access protected product details and profile pages.
+9. **Profile Management:** View profile information and update your name.
+10. **Custom Error Page:** Display a helpful page for unavailable routes.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js
+- npm
+- A MongoDB Atlas database
+- Better Auth and OAuth credentials
+
+### Installation
+
+Clone the repository:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone YOUR_GITHUB_REPOSITORY_URL
+cd bazardor
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Install dependencies:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env.local` file in the project root and configure the required environment variables:
 
-## Learn More
+```env
+MONGODB_URI=your_mongodb_connection_string
+MONGODB_DB=bazardor
+BETTER_AUTH_SECRET=your_better_auth_secret
+BETTER_AUTH_URL=http://localhost:10000
 
-To learn more about Next.js, take a look at the following resources:
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+GITHUB_CLIENT_ID=your_github_client_id
+GITHUB_CLIENT_SECRET=your_github_client_secret
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Never commit `.env.local` or expose database credentials and secret keys.
 
-## Deploy on Vercel
+### Run Locally
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Start the development server:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run dev -- --port 10000
+```
+
+Open http://localhost:10000 in your browser.
+
+### Build
+
+```bash
+npm run build
+```
+
+## Deployment
+
+The application is deployed on Netlify.
+
+**Production URL:** https://bazardor39.netlify.app/
+
+Production environment variables and OAuth callback URLs must be configured for the deployed domain.
+
+## Author
+    Toufique Ahmed
+
