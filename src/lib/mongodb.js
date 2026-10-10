@@ -1,3 +1,4 @@
+
 import { MongoClient } from "mongodb";
 
 const uri = process.env.MONGODB_URI;
@@ -16,12 +17,11 @@ const options = {
 const globalForMongo = globalThis;
 
 const client =
-  globalForMongo.__bazardorMongoClient ||
+  globalForMongo.__bazardorMongoClient ??
   new MongoClient(uri, options);
 
-if (process.env.NODE_ENV !== "production") {
-  globalForMongo.__bazardorMongoClient = client;
-}
+// Reuse the same client in development and production.
+globalForMongo.__bazardorMongoClient = client;
 
 const db = client.db(dbName);
 
