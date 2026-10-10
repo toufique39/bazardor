@@ -6,25 +6,23 @@ if (!uri) {
   throw new Error("MONGODB_URI is not defined");
 }
 
-const options = {};
+const dbName = process.env.MONGODB_DB || "bazardor";
 
-let client;
-let clientPromise;
+const options = {
+  tls: true,
+  serverSelectionTimeoutMS: 15000,
+};
 
-if (process.env.NODE_ENV === "development") {
-  const globalWithMongo = global;
+const globalForMongo = globalThis;
 
-  if (!globalWithMongo._mongoClientPromise) {
-    client = new MongoClient(uri, options);
-    globalWithMongo._mongoClientPromise =
-      client.connect();
-  }
+const client =
+  globalForMongo.__bazardorMongoClient ||
+  new MongoClient(uri, options);
 
-  clientPromise =
-    globalWithMongo._mongoClientPromise;
-} else {
-  client = new MongoClient(uri, options);
-  clientPromise = client.connect();
+if (process.env.NODE_ENV !== "production") {
+  globalForMongo.__bazardorMongoClient = client;
 }
 
-export default clientPromise;
+const db = client.db(dbName);
+
+export { client, db };

@@ -1,123 +1,24 @@
-"use client";
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-import { getProductBySlug } from "@/lib/api";
+import { auth } from "@/lib/auth";
+import ProductPageClient from "./ProductPageClient";
 
-import Navbar from "@/components/Navbar";
-import PriceTicker from "@/components/PriceTicker";
-import ProductDetails from "@/components/ProductDetails";
+export default async function ProductPage({ params }) {
+  const { slug } = await params;
 
-export default function ProductPage() {
-  const params = useParams();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-  const slug = params.slug;
+  if (!session?.user) {
+    const callbackURL = `/product/${slug}`;
 
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
-
-  useEffect(() => {
-    async function loadProduct() {
-      try {
-        setLoading(true);
-        setNotFound(false);
-
-        const data = await getProductBySlug(slug);
-
-        setProduct(data);
-      } catch (error) {
-        console.error(
-          "Failed to load product:",
-          error
-        );
-
-        setProduct(null);
-        setNotFound(true);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    if (slug) {
-      loadProduct();
-    }
-  }, [slug]);
-
-
-  if (loading) {
-    return (
-      <>
-        <Navbar />
-
-        <main className="min-h-screen bg-[#eff7f0] px-4 py-10">
-
-          <div className="mx-auto max-w-6xl">
-
-            <div className="animate-pulse rounded-2xl bg-white p-7">
-
-              <div className="h-16 w-16 rounded-2xl bg-gray-200" />
-
-              <div className="mt-5 h-8 w-64 rounded bg-gray-200" />
-
-              <div className="mt-3 h-4 w-80 rounded bg-gray-200" />
-
-            </div>
-
-          </div>
-
-        </main>
-      </>
+    redirect(
+      `/signin?reason=auth-required&callbackURL=${encodeURIComponent(callbackURL)}`
     );
   }
 
-
-  if (notFound || !product) {
-    return (
-      <>
-        <Navbar />
-        
-
-        <main className="flex min-h-[70vh] items-center justify-center bg-[#eff7f0] px-4">
-
-          <div className="max-w-md rounded-2xl bg-white p-8 text-center shadow-sm">
-
-            <div className="text-5xl">
-              🔎
-            </div>
-
-            <h1 className="mt-4 text-2xl font-extrabold text-gray-900">
-              পণ্য পাওয়া যায়নি
-            </h1>
-
-            <p className="mt-2 text-sm leading-6 text-gray-500">
-              আপনি যে পণ্যটি খুঁজছেন সেটি
-              বর্তমানে পাওয়া যাচ্ছে না।
-            </p>
-
-            <Link
-              href="/"
-              className="mt-5 inline-flex rounded-lg bg-green-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-green-700"
-            >
-              হোম পেজে ফিরে যান
-            </Link>
-
-          </div>
-
-        </main>
-      </>
-    );
-  }
-
-  
-  return (
-    <>
-      <Navbar />
-     
-
-      <ProductDetails product={product} />
-    </>
-  );
+  return <ProductPageClient slug={slug} />;
 }

@@ -1,6 +1,9 @@
 npx json-server db.json --port 5000
 http://localhost:5000/blogs
 
+mongodb connection check ;
+node --env-file=.env.local -e "const { MongoClient } = require('mongodb'); const client = new MongoClient(process.env.MONGODB_URI, { tls: true, serverSelectionTimeoutMS: 15000 }); client.connect().then(async () => { console.log('MongoDB connected successfully'); console.log(await client.db(process.env.MONGODB_DB || 'bazardor').command({ ping: 1 })); }).catch((error) => { console.error('MongoDB connection failed:', error.message); process.exitCode = 1; }).finally(() => client.close());"
+
 Method Endpoint Description
 GET /api/bazardor/categories All categories (8 items)
 GET /api/bazardor/categories/chal Single category by id

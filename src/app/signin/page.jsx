@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
 import { authClient } from "@/lib/auth-client";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
+import GitHubSignInButton from "@/components/GitHubSignInButton";
 
 export default function SigninPage() {
   const router = useRouter();
@@ -13,6 +15,19 @@ export default function SigninPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+
+  useEffect(() => {
+  const url = new URL(window.location.href);
+
+  if (url.searchParams.get("reason") === "auth-required") {
+    toast.error("পণ্য দেখতে আগে সাইন ইন করুন");
+
+    url.searchParams.delete("reason");
+
+    window.history.replaceState({}, "", url.toString());
+  }
+}, []);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -39,8 +54,18 @@ export default function SigninPage() {
 
       toast.success("সফলভাবে সাইন ইন হয়েছে");
 
-      router.replace("/");
-      router.refresh();
+     const params = new URLSearchParams(window.location.search);
+const destination = params.get("callbackURL");
+
+const safeDestination =
+  destination &&
+  destination.startsWith("/") &&
+  !destination.startsWith("//")
+    ? destination
+    : "/";
+
+router.replace(safeDestination);
+router.refresh();
     } catch (error) {
       console.error("Signin error:", error);
 
@@ -150,6 +175,21 @@ export default function SigninPage() {
             </Link>
           </p>
         </div>
+        <div className="my-5 flex items-center gap-3">
+  <div className="h-px flex-1 bg-gray-200" />
+
+  <span className="text-xs text-gray-400">
+    অথবা
+  </span>
+
+  <div className="h-px flex-1 bg-gray-200" />
+</div>
+
+<GoogleSignInButton />
+
+<div className="mt-3">
+  <GitHubSignInButton />
+</div>
 
         {/* Back to Home */}
         <div className="mt-5 text-center">

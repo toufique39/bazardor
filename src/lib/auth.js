@@ -1,25 +1,20 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
-import { MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI;
+import { client, db } from "@/lib/mongodb";
 
-if (!uri) {
-  throw new Error("MONGODB_URI is not defined");
-}
+const googleClientId = process.env.GOOGLE_CLIENT_ID;
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+const githubClientId = process.env.GITHUB_CLIENT_ID;
+const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
 
-if (
-  !process.env.GOOGLE_CLIENT_ID ||
-  !process.env.GOOGLE_CLIENT_SECRET
-) {
+if (!googleClientId || !googleClientSecret) {
   throw new Error("Google OAuth credentials are missing");
 }
 
-const client = new MongoClient(uri);
-
-const db = client.db(
-  process.env.MONGODB_DB || "bazardor"
-);
+if (!githubClientId || !githubClientSecret) {
+  throw new Error("GitHub OAuth credentials are missing");
+}
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL,
@@ -35,8 +30,14 @@ export const auth = betterAuth({
 
   socialProviders: {
     google: {
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: googleClientId,
+      clientSecret: googleClientSecret,
+    },
+
+    github: {
+      clientId: githubClientId,
+      clientSecret: githubClientSecret,
+      scope: ["read:user", "user:email"],
     },
   },
 });

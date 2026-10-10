@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
 import { authClient } from "@/lib/auth-client";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
+import GitHubSignInButton from "@/components/GitHubSignInButton";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -174,6 +176,20 @@ export default function SignupPage() {
             </button>
 
           </form>
+          <div className="my-5 flex items-center gap-3">
+  <div className="h-px flex-1 bg-gray-200" />
+
+  <span className="text-xs text-gray-400">
+    অথবা
+  </span>
+
+  <div className="h-px flex-1 bg-gray-200" />
+</div>
+
+<GoogleSignInButton />
+<div className="mt-3">
+  <GitHubSignInButton />
+</div>
 
           {/* Sign In Link */}
           <p className="mt-5 text-center text-sm text-gray-500">
