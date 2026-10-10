@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 import { getProductBySlug } from "@/lib/api";
-import Navbar from "@/components/Navbar";
 import ProductDetails from "@/components/ProductDetails";
 
 export default function ProductPageClient({ slug }) {
@@ -50,7 +49,6 @@ export default function ProductPageClient({ slug }) {
   if (loading) {
     return (
       <>
-        <Navbar />
 
         <main className="min-h-screen bg-[#eff7f0] px-4 py-10">
           <div className="mx-auto max-w-6xl animate-pulse rounded-2xl bg-white p-7">
@@ -66,7 +64,6 @@ export default function ProductPageClient({ slug }) {
   if (notFound || !product) {
     return (
       <>
-        <Navbar />
 
         <main className="flex min-h-[70vh] items-center justify-center bg-[#eff7f0] px-4">
           <div className="max-w-md rounded-2xl bg-white p-8 text-center shadow-sm">
@@ -94,7 +91,6 @@ export default function ProductPageClient({ slug }) {
 
   return (
     <>
-      <Navbar />
       <ProductDetails product={product} />
     </>
   );

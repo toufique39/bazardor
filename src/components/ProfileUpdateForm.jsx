@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
-import Navbar from "@/components/Navbar";
 
 import { authClient } from "@/lib/auth-client";
 
@@ -60,7 +59,6 @@ export default function ProfileUpdateForm({ currentName }) {
 
   return (
     <div className="min-h-screen bg-[#eff7f0]">
-      <Navbar />
 
       <main className="min-h-[65vh] py-10">
         <div className="mx-auto max-w-xl px-4">

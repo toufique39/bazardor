@@ -138,6 +138,7 @@ export default function CategoryPage() {
 
 
   return (
+    <>
     <main className="min-h-screen bg-[#eff7f0] py-8 md:py-10">
 
       <div className="mx-auto max-w-6xl px-4">
@@ -240,5 +241,6 @@ export default function CategoryPage() {
       </div>
 
     </main>
+    </>
   );
 }

@@ -1,7 +1,6 @@
 
 import Link from "next/link";
 
-import Navbar from "@/components/Navbar";
 
 
 export default function ProfileClient({ user }) {
@@ -14,7 +13,6 @@ export default function ProfileClient({ user }) {
 
   return (
     <div className="min-h-screen bg-[#eff7f0]">
-      <Navbar />
 
       <main className="min-h-[65vh] py-10">
         <div className="mx-auto max-w-3xl px-4">
